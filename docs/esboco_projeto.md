@@ -1,7 +1,7 @@
 # Documento de Esboço do Projeto
 
-## 🎯 Propósito
-Este projeto visa fortalecer a segurança na comunicação corporativa, prevenindo acessos indevidos a mensagens sigilosas.
+## 🎯 Objetivo
+Este projeto visa melhorar a segurança na comunicação corporativa, prevenindo acessos indevidos a mensagens sigilosas.
 
 ## 🛠️ Tecnologias Empregadas
 
