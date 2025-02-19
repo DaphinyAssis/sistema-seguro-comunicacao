@@ -14,5 +14,5 @@ Este projeto visa melhorar a segurança na comunicação corporativa, prevenindo
 1. 👤 **Registro de usuário** → Senha armazenada de forma segura com bcrypt.
 2. 🔑 **Autenticação** → O login gera um token JWT para o usuário.
 3. ✉️ **Envio de mensagens** → O conteúdo é protegido com criptografia AES.
-4. 🏆 **Acesso restrito** → Apenas o destinatário autorizado pode descriptografar a mensagem com RSA.
+4. 🔒 **Acesso restrito** → Apenas o destinatário autorizado pode descriptografar a mensagem com RSA.
 
