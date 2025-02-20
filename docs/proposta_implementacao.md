@@ -1,4 +1,4 @@
-# Proposta de Implementação do Sistema
+# Documentação da Proposta de Implementação do Sistema
 
 ## 📌 Uso das Tecnologias e suas funções no nosso projeto
 

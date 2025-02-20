@@ -3,11 +3,17 @@
 ## 🎯 Objetivo
 Este projeto visa melhorar a segurança na comunicação corporativa, prevenindo acessos indevidos a mensagens sigilosas.
 
-## 🛠️ Tecnologias Empregadas
+## 🛠️ Tecnologias Utilizadas
 
-- 🔒 **bcrypt** → Para armazenamento seguro de senhas.
-- 🔑 **PyJWT** → Para autenticação confiável via tokens JWT.
-- 🔐 **cryptography** → Para criptografia de dados utilizando AES e RSA.
+- 🔒 **bcrypt** → Versão: **3.2.1**  
+  Usado para realizar o **hashing seguro de senhas**, garantindo que as senhas não sejam armazenadas em texto simples.
+
+- 🔑 **PyJWT** → Versão: **2.6.1**  
+  Utilizado para **autenticação confiável via tokens JWT**, permitindo uma comunicação segura sem a necessidade de manter sessões no servidor.
+
+- 🔐 **cryptography** → Versão: **38.0.1**  
+  Responsável pela **criptografia de dados utilizando AES e RSA**, garantindo a segurança das mensagens e proteção das chaves de criptografia.
+
 
 ## 🔄 Funcionamento do Sistema
 
