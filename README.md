@@ -15,4 +15,4 @@ O foco da implementação será:
 Este sistema irá proporcionar um ambiente mais seguro e confiável para a comunicação e o armazenamento de dados sensíveis dentro da organização.
 
 
-Feito por: Daphiny Assis | Guilherme Yuri
+### **Feito por: Daphiny Assis | Guilherme Yuri**
