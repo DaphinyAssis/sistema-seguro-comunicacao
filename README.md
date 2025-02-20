@@ -13,3 +13,6 @@ O foco da implementação será:
 - 🗄️**Uso de Banco de Dados** : Armazenamento seguro de usuários e mensagens criptografadas, garantindo integridade e proteção das informações.
 
 Este sistema irá proporcionar um ambiente mais seguro e confiável para a comunicação e o armazenamento de dados sensíveis dentro da organização.
+
+
+Feito por: Daphiny Assis | Guilherme Yuri
