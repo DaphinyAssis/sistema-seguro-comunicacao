@@ -1,11 +1,25 @@
 # Documentação da Proposta de Implementação do Sistema
 
+## 🎯 Objetivo
+Este projeto visa melhorar a segurança na comunicação corporativa, prevenindo acessos indevidos a mensagens sigilosas.
+
+## 🛠️ Tecnologias Utilizadas
+
+- 🔒 **bcrypt** → Versão: **3.2.1**  
+  Usado para realizar o **hashing seguro de senhas**, garantindo que as senhas não sejam armazenadas em texto simples.
+
+- 🔑 **PyJWT** → Versão: **2.6.1**  
+  Utilizado para **autenticação confiável via tokens JWT**, permitindo uma comunicação segura sem a necessidade de manter sessões no servidor.
+
+- 🔐 **cryptography** → Versão: **38.0.1**  
+  Responsável pela **criptografia de dados utilizando AES e RSA**, garantindo a segurança das mensagens e proteção das chaves de criptografia.
+
 ## 📌 Uso das Tecnologias e suas funções no nosso projeto
 
 ### 1. bcrypt: Hashing Seguro de Senhas 🔐
 
 #### Objetivo:
-O `bcrypt` é utilizado para realizar o **hashing** seguro de senhas, garantindo que as senhas dos usuários não sejam armazenadas em texto simples. 
+O `bcrypt` é utilizado para realizar o **hashing** seguro de senhas, garantindo que as senhas dos usuários não sejam armazenadas em texto simples.
 
 #### Como será utilizado:
 - **Geração de Hash**: Ao cadastrar uma senha, o `bcrypt` gera um hash único e irreversível utilizando um salt (valor aleatório).
@@ -39,24 +53,32 @@ A biblioteca `cryptography` será utilizada para implementar **criptografia sim�
 
 ---
 
-## 🛠️ Principais Etapas de Implementação 
+## 🔄 Funcionamento do Sistema
 
 ### 1. 👤 **Cadastro de Usuário**
-- O usuário fornecerá uma senha, que será **hasheada** utilizando o `bcrypt` para garantir que a senha não seja armazenada em texto simples.
+- O sistema verifica se o usuário já está cadastrado.
+- Se não estiver, os dados são criptografados antes de serem armazenados no banco de dados.
 
 ### 2. 🔑 **Login**
-- Durante o login, será **gerado** um **Token JWT** que será utilizado para autenticar o usuário em requisições subsequentes.
-- O **Token JWT** será **verificado** a cada requisição para garantir a autenticidade do usuário.
+- Durante o login, será **verificado** se os dados do usuário estão corretos.
+- Se forem, um **Token JWT** será gerado e utilizado para autenticação nas requisições subsequentes.
 
-### 3. ✉️ **Criptografia de Mensagens**
-- Para garantir a segurança da comunicação, as mensagens serão **criptografadas** utilizando **AES (CBC)**, com uma chave simétrica.
+### 3. ✉️ **Envio de Mensagens**
+- O sistema segue os seguintes passos:
+  - A mensagem é criptografada com **AES** antes de ser enviada.
+  - Se necessário, a mensagem pode ser criptografada com a chave do usuário antes do armazenamento.
+  - A mensagem criptografada é então enviada para o banco de dados.
 
-### 4. 🔒 **Proteção da Chave AES**
-- A chave AES utilizada para criptografar mensagens será **protegida** utilizando **RSA**. A chave pública RSA será utilizada para criptografar a chave AES, garantindo que apenas o destinatário com a chave privada possa descriptografá-la.
+### 4. 🔓 **Recebimento de Mensagens**
+- Para garantir o acesso seguro:
+  - A mensagem criptografada é recuperada do banco.
+  - Se necessário, ela é primeiro descriptografada com a chave do usuário.
+  - A chave AES da mensagem é descriptografada com a chave RSA do destinatário.
+  - O destinatário pode então acessar a mensagem de forma segura.
 
 ---
 
-## 🔐 Explicação Sobre Armazenamento Seguro de Dados 
+## 🔐 Explicação Sobre Armazenamento Seguro de Dados
 
 ### Objetivo:
 Garantir que os dados sensíveis, como senhas e informações pessoais, sejam armazenados de maneira protegida e que, mesmo em caso de vazamento, esses dados não possam ser facilmente acessados ou utilizados.

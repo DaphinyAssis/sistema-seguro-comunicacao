@@ -10,5 +10,6 @@ O foco da implementação será:
 - 🛡️**Autenticação via Tokens JWT** : Geração e verificação de **tokens JWT** para garantir que apenas usuários autenticados possam acessar recursos protegidos.
 - ✉️🔒**Criptografia de mensagens** : Uso do algoritmo **AES** para criptografar as mensagens sensíveis trocadas entre os funcionários.
 - 🔑**Proteção da chave de criptografia** : A chave AES será protegida utilizando **RSA**, garantindo que só o destinatário correto possa descriptografá-la.
+- 🗄️**Uso de Banco de Dados** : Armazenamento seguro de usuários e mensagens criptografadas, garantindo integridade e proteção das informações.
 
 Este sistema irá proporcionar um ambiente mais seguro e confiável para a comunicação e o armazenamento de dados sensíveis dentro da organização.

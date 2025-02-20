@@ -14,11 +14,17 @@ Este projeto visa melhorar a segurança na comunicação corporativa, prevenindo
 - 🔐 **cryptography** → Versão: **38.0.1**  
   Responsável pela **criptografia de dados utilizando AES e RSA**, garantindo a segurança das mensagens e proteção das chaves de criptografia.
 
-
 ## 🔄 Funcionamento do Sistema
 
-1. 👤 **Registro de usuário** → Senha armazenada de forma segura com bcrypt.
-2. 🔑 **Autenticação** → O login gera um token JWT para o usuário.
-3. ✉️ **Envio de mensagens** → O conteúdo é protegido com criptografia AES.
-4. 🔒 **Acesso restrito** → Apenas o destinatário autorizado pode descriptografar a mensagem com RSA.
+1. 👤 **Registro de usuário** → O sistema verifica se o usuário já está cadastrado. Se não estiver, seus dados são criptografados antes de serem armazenados no banco.
+2. 🔑 **Autenticação** → O login verifica se as credenciais são corretas. Se forem, um token JWT é gerado para autenticação.
+3. ✉️ **Envio de mensagens** → O sistema segue os seguintes passos:
+   - A mensagem é criptografada com **AES** antes de ser enviada.
+   - Se necessário, a mensagem pode ser criptografada com a chave do usuário antes do armazenamento.
+   - A mensagem criptografada é então enviada para o banco de dados.
+4. 🔓 **Recebimento de mensagens** → Para garantir o acesso seguro:
+   - A mensagem criptografada é recuperada do banco.
+   - Se necessário, ela é primeiro descriptografada com a chave do usuário.
+   - A chave AES da mensagem é descriptografada com a chave RSA do destinatário.
+   - O destinatário pode então acessar a mensagem de forma segura.
 
