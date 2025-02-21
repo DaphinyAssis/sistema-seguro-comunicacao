@@ -3,7 +3,7 @@ from for_tests import *
 
 class Run:
     def __init__(self):
-        #self.gui = GInterface()
+        self.gui = GInterface()
         pass
         """Começar a integração do back com o front 
             1 - Registro de usuario

@@ -4,7 +4,7 @@ crypt = Crypt()
 class Database:
     def __init__(self):
         
-        self.db = ctypes.CDLL(r"C:\Users\aw3d4rghmn789\Documents\sistema-seguro-comunicacao\src\repository\C\database.dll")
+        self.db = ctypes.CDLL(r"C:\Users\assis\OneDrive\Anexos\Documentos\sistema-seguro-comunicacao\src\repository\C\database.dll")
         # Definir argumentos para evitar problemas de string
         self.db.insert_user.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_char_p, ctypes.c_char_p, ctypes.c_char_p]
         self.db.get_user.argtypes = [ctypes.c_char_p]
