@@ -1,2 +1,3 @@
-cd /c/Users/assis/Documents/sistema-seguro_comunicacao/src/repository/C
+cd /c/Users/assis/OneDrive/Anexos/Documentos/sistema-seguro-comunicacao/src/repository/C
 gcc -shared -o database.dll -Wl,--out-implib,libdatabase.a -fPIC database.c
+C:\Users\assis\OneDrive\Anexos\Documentos\sistema-seguro-comunicacao\src\repository\C

@@ -263,7 +263,7 @@ void list_messages_from_chat(int chat_id, char *buffer, size_t buffer_size) {
     }
 
     Chat chat;
-    buffer[0] = '\0';  // Inicializa o buffer vazio
+    buffer[0] = '\0';
     char temp[512];
 
     while (fread(&chat, sizeof(Chat), 1, chats_db)) {

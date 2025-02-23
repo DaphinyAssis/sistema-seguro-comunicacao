@@ -30,16 +30,13 @@ class Database:
         self.db.delete_user(email.encode())
 
     def list_users(self):
-        buffer_size = 4096  # Define um tamanho grande para armazenar os dados
+        buffer_size = 4096  
         buffer = ctypes.create_string_buffer(buffer_size)
         self.db.list_users(buffer, buffer_size)
-        # Decodifica o buffer e ignora erros de decodificação
         users_str = buffer.value.decode("utf-8", errors="ignore").strip()
 
         if "Error!" in users_str or "No users found" in users_str:
-            return []  # Retorna uma lista vazia se houver erro ou nenhum usuário
-
-        # Divide os registros corretamente com base no '\n' adicionado
+            return []  
         users_list = [user.split("|") for user in users_str.split("\n") if user]
 
         return users_list
@@ -82,34 +79,27 @@ class Database:
         return messages_list
 
     def list_messages_from_chat(self, chat_id):
-            buffer_size = 4096
-            buffer = ctypes.create_string_buffer(buffer_size)
-            self.db.list_messages_from_chat(ctypes.c_int(chat_id), buffer, buffer_size)
+        buffer_size = 4096
+        buffer = ctypes.create_string_buffer(buffer_size)
+        self.db.list_messages_from_chat(ctypes.c_int(chat_id), buffer, buffer_size)
 
-            messages_str = buffer.value.decode("utf-8", errors="ignore").strip()
+        messages_str = buffer.value.decode("utf-8", errors="ignore").strip()
 
-            if "Error!" in messages_str or "Chat ID not found" in messages_str:
-                return []
+        if "Error!" in messages_str or "Chat ID not found" in messages_str:
+            return []
 
-            # Quebra as mensagens em uma lista
-            messages_list = [line.split("|") for line in messages_str.split("\n") if line]
+        # Quebra as mensagens em uma lista
+        messages_list = [line.split("|") for line in messages_str.split("\n") if line]
 
-            # Descriptografar as mensagens e garantir que não haja duplicatas
-            decrypted_messages_list = []
-            seen_messages = set()  # Armazena as mensagens já vistas, por exemplo, usando hash
+        # Descriptografar todas as mensagens (removida a verificação de duplicados)
+        decrypted_messages_list = []
 
-            for sender_email, encrypted_message in messages_list:
-                decrypted_message = crypt.decrypt_aes(encrypted_message)
+        for sender_email, encrypted_message in messages_list:
+            decrypted_message = crypt.decrypt_aes(encrypted_message)
+            decrypted_messages_list.append([sender_email, decrypted_message])
 
-                # Gerar um hash único para a mensagem (pode ser uma combinação de email e conteúdo)
-                message_hash = hash(decrypted_message + sender_email)
+        return decrypted_messages_list
 
-                # Se a mensagem não foi vista antes, adicione-a à lista
-                if message_hash not in seen_messages:
-                    seen_messages.add(message_hash)
-                    decrypted_messages_list.append([sender_email, decrypted_message])
-
-            return decrypted_messages_list
 """db = Database()
 #db.insert_user("diana@example.com", "Diana", "pass123", "hash789", "555-1234")
 db.send_message("diana@example.com", "teste@example.com", "Outra mensagem")
