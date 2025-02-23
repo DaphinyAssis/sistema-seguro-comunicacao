@@ -20,7 +20,7 @@ class Run:
         """
             POLIMENTO:
             Melhorar design da pagina register
-            Melhorar design do celular
+            Melhorar design do celular CHECK
             Melhorar design da pagina Login
             Melhorar design do Chat app
         """

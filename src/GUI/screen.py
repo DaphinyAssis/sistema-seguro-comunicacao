@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from tkinter import Tk, Label, Entry, Button
+from tkinter import Tk, Label, Entry, Button, PhotoImage
 from utils.database import Database
 from utils.login_verify import login
 from utils.register_verify import register
@@ -20,21 +20,63 @@ class Chat:
         self.gui_instance.chat_id = self.id  # Armazena apenas o ID
         self.gui_instance.load_message_in_canvas()
 
+import customtkinter as ctk
+from tkinter import PhotoImage
+import random
+
 class Phone:
     def __init__(self, window):
         self.window = window
-        self.code = str(random.randint(111111,999999))
+        self.code = str(random.randint(111111, 999999))
         self.modal = ctk.CTkToplevel(self.window)
-        self.modal.geometry("400x300")
+        self.modal.resizable(0, 0)
         self.modal.title("Phone")
+        self.modal.overrideredirect(True)
+
+        self.png_phone_no_message = PhotoImage(file=r"C:\Users\assis\OneDrive\Anexos\Documentos\sistema-seguro-comunicacao\src\assets\phone_no_message.png")
+
+        self.modal.geometry(f"{self.png_phone_no_message.width()}x{self.png_phone_no_message.height()}")
+
+        self.frame = ctk.CTkFrame(self.modal)
+        self.frame.pack(fill="both", expand=True)
+
+        self.bg = ctk.CTkLabel(self.frame, image=self.png_phone_no_message, text="")
+        self.bg.pack(fill="both", expand=True)
+
+        self.bg.bind("<ButtonPress-1>", self.start_move)
+        self.bg.bind("<B1-Motion>", self.on_move)
+        self.bg.bind("<ButtonRelease-1>", self.stop_move)
+
+        self.x_offset = 0
+        self.y_offset = 0
+
+    def start_move(self, event):
+        """Captura a posição inicial do mouse."""
+        self.x_offset = event.x
+        self.y_offset = event.y
+
+    def on_move(self, event):
+        """Move a janela conforme o mouse é arrastado."""
+        x = self.modal.winfo_x() + (event.x - self.x_offset)
+        y = self.modal.winfo_y() + (event.y - self.y_offset)
+        self.modal.geometry(f"+{x}+{y}")
+
+    def stop_move(self, event):
+        """Finaliza o movimento (opcional)."""
+        pass
 
     def get_code(self):
         return self.code
-    
+
     def show_code(self):
         """Exibe um modal para adicionar um novo chat"""
-        label_email = ctk.CTkLabel(self.modal, text=self.code)
-        label_email.pack(pady=5)
+        self.png_phone_message = PhotoImage(file=r"C:\Users\assis\OneDrive\Anexos\Documentos\sistema-seguro-comunicacao\src\assets\phone_message.png")
+
+        self.bg.configure(image=self.png_phone_message)
+        self.bg.image = self.png_phone_message 
+
+        label_email = ctk.CTkLabel(self.bg, text=self.code, font=("Arial", 14), fg_color="#e9e9eb", text_color="black", bg_color="#e9e9eb")
+        label_email.place(x=60, y=207)
 
 class GInterface:
     def __init__(self):
@@ -154,17 +196,14 @@ class GInterface:
         chats = self.db.list_chats(self.logged_email)
         #print("Chats encontrados:", chats)  # Debug
 
-        # Limpa os widgets da lista antes de adicionar novos
         for widget in self.component_chat_canvas.winfo_children():
             widget.destroy()
-
-        # Usa um conjunto para evitar emails duplicados
         emails_adicionados = set()
 
         for chat in chats:
-            if chat[1] not in emails_adicionados:  # Verifica se o email já foi adicionado
+            if chat[1] not in emails_adicionados: 
                 Chat(self.component_chat_canvas, chat, self)
-                emails_adicionados.add(chat[1])  # Adiciona o email ao conjunto
+                emails_adicionados.add(chat[1]) 
 
     def message_frame(self):
         """Cria a área de mensagens"""
@@ -174,7 +213,7 @@ class GInterface:
     def load_message_in_canvas(self, force_update=False):
         """Carrega as mensagens no chat"""
         if not self.chat_id:
-            return  # Evita erro ao tentar carregar mensagens sem chat ativo
+            return  
 
         #print(f"Atualizando mensagens para o chat: {self.chat_id}")  # Debug
         messages = self.db.list_messages_from_chat(self.chat_id)
@@ -198,7 +237,7 @@ class GInterface:
                 fg_color=color, 
                 width=700, 
                 corner_radius=5,
-                wraplength=700  # Define o limite de quebra de linha
+                wraplength=700  
             )
             label.pack(pady=5, padx=10, anchor=align)
 
@@ -207,7 +246,7 @@ class GInterface:
     def update_messages_loop(self):
         """Atualiza mensagens e chats a cada 2 segundos"""
         self.load_message_in_canvas(force_update=True)
-        self.load_chats()  # Atualiza a lista de chats em tempo real
+        self.load_chats() 
         self.window.after(2000, self.update_messages_loop)
 
     def input_send_message(self):
@@ -248,8 +287,8 @@ class GInterface:
         """Obtém o e-mail do destinatário com base no chat_id"""
         for chat in self.db.list_chats(self.logged_email):
             if chat[0] == chat_id:
-                return chat[1]  # Retorna o e-mail do destinatário
-        return None  # Retorna None caso não encontre
+                return chat[1]  
+        return None  
 
     def create_new_chat(self, email, message, modal):
         """Cria um novo chat com um usuário"""
